@@ -1,11 +1,11 @@
 // 실제 확인된 값만 입력하세요. 빈 값은 클릭할 수 없는 상태로 유지됩니다.
 // 검색엔진용 본문·연락처·구조화 데이터는 index.html에도 직접 반영하세요.
 const CONTACT = {
-  phone: "", // 예시 형식: 국가번호 또는 지역번호를 포함한 숫자와 하이픈
-  map: "",
-  blog: "",
-  place: "",
-  kakao: ""
+  phone: "02-486-4578", // 예시 형식: 국가번호 또는 지역번호를 포함한 숫자와 하이픈
+  map: "https://naver.me/FV7rl9sz",
+  blog: "https://blog.naver.com/malkorea7",
+  place: "https://map.naver.com/p/entry/place/37089983?placePath=%2Fhome",
+  kakao: "https://pf.kakao.com/_DxlTyb"
 };
 const labels = {phone:"전화 상담하기",map:"지도에서 위치 보기 ↗",blog:"네이버 블로그 ↗",place:"네이버 플레이스 ↗",kakao:"카카오채널 ↗"};
 for (const [key, value] of Object.entries(CONTACT)) {
@@ -34,3 +34,5 @@ menu.addEventListener("click", () => {
 navigation.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
   navigation.classList.add("is-collapsed"); menu.setAttribute("aria-expanded", "false");
 }));
+
+
