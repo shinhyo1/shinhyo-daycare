@@ -9,3 +9,5 @@ h1,h2,h3{word-break:keep-all}.caption a{text-decoration:underline}@media(max-wid
 @media(max-width:700px){.header-logo{width:230px;height:50px}.header-logo img{width:230px;height:230px;top:-90px}.brand{max-width:230px}.hero-brand{max-width:430px;margin:0 auto}.hero-brand-note{margin-top:-65px}.strength-list,.provided-facility,.program-photo-grid,.moments{grid-template-columns:1fr}.strength-list article:last-child{grid-column:auto}.provided-facility img{height:auto;max-height:420px}.hero{padding-top:32px}.strength-list article{padding:22px}.program-photo-grid{gap:20px}.program-photo-grid img{aspect-ratio:auto}nav{gap:14px 20px}}
 
 .fee-panel{margin-top:32px;padding:clamp(18px,3vw,32px);background:#fff;border:1px solid #dbe5e8;border-radius:24px;scroll-margin-top:110px}.fee-image-link{display:block;margin:22px auto;max-width:920px}.fee-image-link img{display:block;width:100%;height:auto;border:1px solid #e2e7eb;border-radius:8px}.facts>div{min-width:0}.facts strong{overflow-wrap:anywhere}
+
+.guide-details{grid-template-columns:1fr;gap:28px}.guide-details>div+div{border-top:1px solid var(--line);padding-top:28px}
