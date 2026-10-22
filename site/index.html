@@ -30,6 +30,17 @@
 <meta name="theme-color" content="#f39800">
 <link rel="icon" href="logo.png" type="image/png">
 <link rel="stylesheet" href="styles.css">
+<!-- 로딩 전후에 같은 로고 공간과 모바일 메뉴 상태를 유지합니다. -->
+<style>
+.hero-brand { width: 100%; min-width: 0; }
+.hero-brand > img { aspect-ratio: 1 / 1; }
+</style>
+<noscript><style>
+@media (max-width: 700px) {
+ #navigation.is-collapsed { display: flex; }
+ .menu-toggle { display: none !important; }
+}
+</style></noscript>
 <script defer src="script.js"></script><script defer src="kakao-map.js"></script>
 <!-- 확인된 상호만 기재한 최소 데이터입니다. 주소 등 추가 템플릿은 README 참조. -->
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://shinhyo-daycare.pages.dev/#business","name":"신효데이케어센터","url":"https://shinhyo-daycare.pages.dev/","telephone":"+82-2-486-4578","address":{"@type":"PostalAddress","streetAddress":"가락로 45, 3층","addressLocality":"송파구","addressRegion":"서울특별시","addressCountry":"KR"},"logo":"https://shinhyo-daycare.pages.dev/logo.png","sameAs":["https://blog.naver.com/malkorea7","https://pf.kakao.com/_DxlTyb"]}</script>
@@ -39,8 +50,8 @@
 <div class="draft">안심토탈케어 · 운영시간 08:00~20:00 · 이용·방문 상담 02-486-4578</div>
 <header>
 <a class="brand" href="./" aria-label="신효데이케어센터 홈"><span class="header-logo"><img src="logo.png" alt="신효데이케어 앤드 주식회사 로고" width="500" height="500"></span></a>
-<button class="menu-toggle" aria-expanded="false" aria-controls="navigation" hidden>메뉴</button>
-<nav id="navigation" aria-label="주 메뉴"><a href="#about">시설 소개</a><a href="#strengths">특징</a><a href="#guide">이용안내</a><a href="#programs">프로그램</a><a href="#faq">자주 묻는 질문</a><a class="nav-cta" href="#contact">상담 안내 ↗</a></nav>
+<button class="menu-toggle" aria-expanded="false" aria-controls="navigation">메뉴</button>
+<nav class="is-collapsed" id="navigation" aria-label="주 메뉴"><a href="#about">시설 소개</a><a href="#strengths">특징</a><a href="#guide">이용안내</a><a href="#programs">프로그램</a><a href="#faq">자주 묻는 질문</a><a class="nav-cta" href="#contact">상담 안내 ↗</a></nav>
 </header>
 <main id="main">
 <section class="hero wrap">
@@ -102,4 +113,3 @@
 
 
 <!-- Deployment retry: verified blog information, 2026-10-20 -->
-
