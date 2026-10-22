@@ -19,6 +19,23 @@
  const label = new kakao.maps.InfoWindow({content:'<div style="padding:8px 12px;font-size:13px;white-space:nowrap;color:#203d34">신효데이케어센터 · 3층</div>'});
  label.open(map,marker);
  map.addControl(new kakao.maps.ZoomControl(),kakao.maps.ControlPosition.RIGHT);
+
+ // 이 마커는 위치 표시용입니다. SDK가 만든 빈 링크와 장식 역할의 충돌만 제거합니다.
+ // 지도 이동·확대/축소 및 아래 길찾기 링크는 그대로 유지합니다.
+ const fixMarkerAccessibility = () => {
+  container.querySelectorAll('map[id^="daum.maps.Marker.Area"] area[role="presentation"]').forEach(area => {
+   if (area.getAttribute('href') !== 'javascript:void(0)' || area.getAttribute('alt')) return;
+   area.removeAttribute('href');
+   area.removeAttribute('role');
+  });
+ };
+ fixMarkerAccessibility();
+ // 지도 크기 변경 등으로 SDK가 마커를 다시 만들 때도 같은 설정을 적용합니다.
+ if (window.MutationObserver) {
+  new MutationObserver(fixMarkerAccessibility).observe(container, {
+   childList: true, subtree: true, attributes: true, attributeFilter: ['href', 'role']
+  });
+ }
  const recenter=()=>{map.relayout();map.setCenter(point);};
  if (window.ResizeObserver) new ResizeObserver(recenter).observe(container); else window.addEventListener('resize',recenter);
  container.dataset.loaded = 'true';
