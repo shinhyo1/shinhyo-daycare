@@ -1,5 +1,7 @@
 # 신효데이케어센터 정적 홈페이지
 
+> 2026-10-30 상세 페이지·Notion 연동 추가본: 현재 적용 절차와 완료·미완료 범위는 [NOTION-DEPLOY.md](NOTION-DEPLOY.md)를 먼저 확인하세요. 아래는 기존 정적 사이트 안내이며, Notion 연동 시 빌드는 `npm run build`, 출력은 `dist`입니다.
+
 별도 빌드·패키지 설치 없이 HTML/CSS/JS만으로 동작합니다.
 GitHub는 소스 관리, Cloudflare Pages는 웹 공개 용도로 사용합니다.
 이 패키지는 로컬 파일 납품본입니다. GitHub 저장소 생성·Cloudflare 계정 연결·실제 배포는 수행하지 않았습니다.
