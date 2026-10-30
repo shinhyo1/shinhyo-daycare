@@ -9,13 +9,13 @@ export function normalize(page,kind) {
  const text=(key,type='rich_text')=>(p[key]?.[type]||[]).map(x=>x.plain_text??x.text?.content??'').join('');
  if(p.Published?.checkbox!==true || page.archived || page.in_trash) return null;
  const title=text('Name','title'),summary=text('Summary'),body=text('Body'),slug=text('Slug');
- if(!title || !summary || !body) throw Error('Published content requires Name, Summary and Body');
+ if(!title || !summary) throw Error('Published content requires Name and Summary');
  if(title.length>200 || summary.length>600 || body.length>20000) throw Error('Content exceeds limits');
  if(kind==='programs' && !programs.some(x=>x.slug===slug)) throw Error('Invalid program Slug');
  if(kind==='news' && !/^[a-f0-9-]{32,36}$/i.test(page.id||''))throw Error('Invalid news ID');
  const date=p.Date?.date?.start;
  if(kind==='news' && !/^\d{4}-\d{2}-\d{2}$/.test(date||'')) throw Error('News requires Date without time');
- return {slug:kind==='news'?page.id.replaceAll('-',''):slug,title,summary,body,date};
+ return {id:page.id,slug:kind==='news'?page.id.replaceAll('-',''):slug,title,summary,body,date};
 }
 export async function queryNotion(id,token,fetcher=fetch) {
  if(!/^[a-f0-9-]{32,36}$/i.test(id)) throw Error('Invalid data source ID');

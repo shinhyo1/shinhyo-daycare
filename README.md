@@ -1,5 +1,7 @@
 # 신효데이케어센터 정적 홈페이지
 
+사진과 본문을 노션 페이지에서 함께 편집하는 방법은 [NOTION-EDITOR.md](NOTION-EDITOR.md)를 참고하세요. 자동 연동은 별도 활성화 전까지 비활성 상태입니다.
+
 > 2026-10-30 상세 페이지·Notion 연동 추가본: 현재 적용 절차와 완료·미완료 범위는 [NOTION-DEPLOY.md](NOTION-DEPLOY.md)를 먼저 확인하세요. 아래는 기존 정적 사이트 안내이며, Notion 연동 시 빌드는 `npm run build`, 출력은 `dist`입니다.
 
 별도 빌드·패키지 설치 없이 HTML/CSS/JS만으로 동작합니다.

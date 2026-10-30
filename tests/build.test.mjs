@@ -34,3 +34,12 @@ test('mock Notion build escapes public text and never emits token; unpublish rem
  }
  assert.equal(existsSync(`dist/news/${'c'.repeat(32)}/index.html`),false);
 });
+test('page text and downloaded photo are emitted together without temporary image URL',()=>{
+ const env={...process.env,NOTION_TOKEN:'test-only-secret-456',NOTION_PROGRAMS_DATA_SOURCE_ID:'a'.repeat(32),NOTION_NEWS_DATA_SOURCE_ID:'b'.repeat(32)};
+ const fixture=`const rt=t=>[{type:'text',plain_text:t}];globalThis.fetch=async(url,opts)=>{if(url.startsWith('https://file.notion.so'))return new Response(Buffer.from([255,216,255,0]),{headers:{'content-type':'image/jpeg'}});if(url.includes('/blocks/'))return Response.json({results:[{type:'heading_2',heading_2:{rich_text:rt('본문 제목')}},{type:'paragraph',paragraph:{rich_text:rt('사진과 함께 쓰는 본문')}},{type:'image',image:{file:{url:'https://file.notion.so/photo?signature=temporary'},caption:rt('사진 설명')}}],has_more:false});return Response.json({results:url.includes('${'a'.repeat(32)}')?[{id:'${'c'.repeat(32)}',properties:{Published:{checkbox:true},Name:{title:rt('인지 프로그램')},Summary:{rich_text:rt('노션 요약')},Slug:{rich_text:rt('cognition')}}}]:[],has_more:false});};await import('./scripts/build.mjs');`;
+ try{
+  execFileSync(process.execPath,['--input-type=module','-e',fixture],{env});
+  const html=readFileSync('dist/programs/cognition/index.html','utf8');assert.ok(html.includes('<h3>본문 제목</h3><p>사진과 함께 쓰는 본문</p>'));assert.ok(html.includes('사진 설명'));assert.ok(!html.includes('signature=temporary'));assert.ok(!html.includes(env.NOTION_TOKEN));
+  const path=html.match(/src="(\/assets\/notion\/[a-f0-9]+\.jpg)"/)[1];assert.ok(existsSync('dist'+path));assert.equal(readFileSync('dist'+path).length,4);
+ }finally{for(const k of ['NOTION_TOKEN','NOTION_PROGRAMS_DATA_SOURCE_ID','NOTION_NEWS_DATA_SOURCE_ID'])delete env[k];execFileSync(process.execPath,['scripts/build.mjs'],{env});}
+});
