@@ -44,7 +44,7 @@ await page('/news/','센터 소식','신효데이케어센터의 공지와 활�
 for(const n of news){const path=`/news/${n.slug}/`;urls.push(path);await page(path,n.title,n.summary,`<p><time datetime="${e(n.date)}">${e(n.date)}</time></p>${n.html||paragraphs(n.body)}<p><a href="/news/">센터 소식 목록 →</a></p>`);}
 const links=`<div class="detail-links">${programs.map(p=>`<a class="button secondary" href="/programs/${p.slug}/">${p.title} 자세히 보기 →</a>`).join('')}</div>`;
 if(!source.includes('<!-- program-details -->'))source=source.replace('<div class="program-photo-grid">',`<!-- program-details -->${links}\n<div class="program-photo-grid">`);
-const newsBlock=`<!-- center-news --><section id="news" class="wrap section"><p class="eyebrow">센터 소식</p><h2>센터의 새 소식</h2>${list||'<p>등록된 센터 소식이 없습니다.</p>'}<a class="text-link" href="/news/">센터 소식 전체 보기 →</a></section><!-- /center-news -->`;
+const newsBlock=`<!-- center-news -->${news.length ? `<section id="news" class="wrap section"><p class="eyebrow">센터 소식</p><h2>센터의 새 소식</h2>${list}<a class="text-link" href="/news/">센터 소식 전체 보기 →</a></section>` : ''}<!-- /center-news -->`;
 source=source.includes('<!-- center-news -->')?source.replace(/<!-- center-news -->[\s\S]*?<!-- \/center-news -->/,newsBlock):source.replace('<section id="faq"',newsBlock+'\n<section id="faq"');
 await writeFile(new URL('index.html',out),source);
 await writeFile(new URL('sitemap.xml',out),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map(p=>`<url><loc>${base}${p}</loc></url>`).join('')}</urlset>`);

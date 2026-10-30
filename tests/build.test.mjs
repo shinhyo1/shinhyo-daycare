@@ -18,6 +18,7 @@ test('offline build preserves assets and all internal page links resolve',()=>{
   }
  }
  const main=readFileSync('dist/index.html','utf8');assert.equal((main.match(/<!-- program-details -->/g)||[]).length,1);assert.equal((main.match(/<!-- center-news -->/g)||[]).length,1);
+ assert.ok(!main.includes('id="news"'));assert.ok(!main.includes('센터의 새 소식'));
  for(const slug of ['cognition','movement','care']){const h=readFileSync(`dist/programs/${slug}/index.html`,'utf8');assert.ok(h.includes(`href="https://shinhyo-daycare.pages.dev/programs/${slug}/"`));assert.ok(h.includes('href="/"'));}
 });
 test('mock Notion build escapes public text and never emits token; unpublish removes news',()=>{
@@ -28,11 +29,13 @@ test('mock Notion build escapes public text and never emits token; unpublish rem
   const html=readFileSync(`dist/news/${'c'.repeat(32)}/index.html`,'utf8');
   assert.ok(html.includes('&lt;script&gt;alert(1)&lt;/script&gt;'));assert.ok(!html.includes(env.NOTION_TOKEN));
   assert.ok(readFileSync('dist/index.html','utf8').includes('테스트 소식'));
+  assert.ok(readFileSync('dist/index.html','utf8').includes('id="news"'));
  } finally {
   for(const k of ['NOTION_TOKEN','NOTION_PROGRAMS_DATA_SOURCE_ID','NOTION_NEWS_DATA_SOURCE_ID'])delete env[k];
   execFileSync(process.execPath,['scripts/build.mjs'],{env});
  }
  assert.equal(existsSync(`dist/news/${'c'.repeat(32)}/index.html`),false);
+ assert.ok(!readFileSync('dist/index.html','utf8').includes('id="news"'));
 });
 test('page text and downloaded photo are emitted together without temporary image URL',()=>{
  const env={...process.env,NOTION_TOKEN:'test-only-secret-456',NOTION_PROGRAMS_DATA_SOURCE_ID:'a'.repeat(32),NOTION_NEWS_DATA_SOURCE_ID:'b'.repeat(32)};
